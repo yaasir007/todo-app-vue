@@ -1,8 +1,15 @@
 <script setup>
 import { ref, defineProps } from 'vue'
 const props = defineProps(['editedTitle', 'editedTaskIndex'])
+const emit = defineEmits(['saveChanges'])
+const editTask = ref('')
 
-const newTitle = ref("")
+const editItem = () => {
+  if (editTask.value.trim() !== "") {
+    emit('save-changes', editTask.value, props.editedTaskIndex)
+    editTask.value = ''
+  }
+}
 </script>
 
 <template>
@@ -14,11 +21,11 @@ const newTitle = ref("")
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Add new title" v-model="newTitle">
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Add new title" v-model="editTask">
         </div>
         <div class="modal-footer">
           <button class="btn btn-warning" @click="$emit('closeModal')">Cancel</button>
-          <button class="btn btn-primary" @click="$emit('saveChanges', newTitle, editedTaskIndex)">Save Change</button>
+          <button class="btn btn-primary" @click="editItem">Save Change</button>
         </div>
       </div>
     </div>
