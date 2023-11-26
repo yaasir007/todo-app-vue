@@ -4,9 +4,9 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import taskItem from './components/TaskItem.vue'
 import ModalItem from './components/ModalItem.vue'
+import TaskInput from './components/TaskInput.vue'
 import bootstrap from 'bootstrap/dist/js/bootstrap.js'
 
-const newTask = ref('')
 const editedTitle = ref('');
 const editedTaskIndex = ref();
 const tasks = ref([]);
@@ -19,12 +19,9 @@ const notify = (params) => {
   });
 }
 
-const addTask = () => {
-  if (newTask.value.trim() !== "") {
-    tasks.value.push({ title: newTask.value, completed: false })
-    newTask.value = ''
-    notify("Task Added!")
-  }
+const addTask = (task) => {
+  tasks.value.push(task)
+  notify("Task Added!")
 }
 
 const UncompletedTasks = () => {
@@ -88,10 +85,9 @@ onMounted(() => {
 <template>
   <div class="container-md mt-5">
     <div class="mb-3">
-      <h2 class="mb-4">To-Do App</h2>
       <h4 class="mb-3">Uncompleted Todos: <span class="incomplete">{{ uncompleted }}</span></h4>
       <h4 for="exampleFormControlInput1" class="form-label">New Task</h4>
-      <input type="text" v-model="newTask" class="form-control mt-3 homeInput" id="exampleFormControlInput1" placeholder="Press enter to add item..." @keyup.enter="addTask">
+      <TaskInput @addTask="addTask" />
     </div>
 
     <taskItem v-for="(task, index) in tasks" :tasks="tasks" :task="task" :index="index" :editTask="editTask" v-on:deleteItem="deleteTask" v-on:toggleCompletedItem="toggleCompleted" v-on:editItem="showModal" />
