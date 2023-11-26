@@ -15,7 +15,7 @@ let Modal;
 
 const notify = (params) => {
   toast(params, {
-    autoClose: 2000,
+    autoClose: 1500,
   });
 }
 
