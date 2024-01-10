@@ -13,7 +13,6 @@ const props = defineProps(['tasks', 'task', 'index'])
               <button v-if="task.completed" class="btn btn-sm btn-warning mx-1" @click="$emit('toggleCompletedItem', task)">undo</button>
               <button v-else class="btn btn-sm btn-success mx-1" @click="$emit('toggleCompletedItem', task)">Completed</button>
 
-              <!-- <button class="btn btn-sm btn-primary mx-1" @click="$emit('editItem', task, index)">Edit</button> -->
               <button class="btn btn-sm btn-danger mx-1" @click="$emit('deleteItem', index)">Delete</button>
             </div>
         </div>
